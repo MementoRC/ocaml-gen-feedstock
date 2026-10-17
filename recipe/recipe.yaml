@@ -28,6 +28,8 @@ build:
         # dune cache trips over mixed path separators on windows.
         # dune install also opens the shared cache; disable it for every dune call
         - set DUNE_CACHE=disabled
+        # dune does not search the host prefix for findlib packages (ocaml-seq) on windows
+        - set "OCAMLPATH=%LIBRARY_PREFIX%\lib\ocaml;%OCAMLPATH%"
         - dune build --cache=disabled --profile=release -p gen @install
         - if errorlevel 1 exit 1
         - dune install --prefix="%LIBRARY_PREFIX%" --libdir="%LIBRARY_PREFIX%\lib\ocaml" gen
